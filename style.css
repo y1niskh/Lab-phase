@@ -78,7 +78,7 @@ header::after {
   pointer-events: none; /* Pour ne pas bloquer les interactions */
 }
 .hero h1 {
-  font-size: 6rem;
+  font-size: 7rem;
   font-weight: 800;
   z-index: 1;
   margin-bottom: 90px;
@@ -361,6 +361,20 @@ footer {
 .insta p {
   margin-left: 7px;
 }
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.burger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
@@ -370,6 +384,30 @@ footer {
   .panier-container {
     flex-direction: column;
   }
+  .burger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #111;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding: 16px 0;
+    border-top: 1px solid #222;
+  }
+
 }
 
 @media (max-width: 600px) {
@@ -379,4 +417,28 @@ footer {
   .products-grid {
     grid-template-columns: 1fr;
   }
+  .burger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #111;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding: 16px 0;
+    border-top: 1px solid #222;
+  }
+
 }

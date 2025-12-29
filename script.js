@@ -139,4 +139,13 @@ function afficherPanier() {
   document.querySelector(".total").textContent = total + 400 + " DA";
 }
 
+
 updateCartCount();
+
+  const burger = document.getElementById("burger");
+  const navLinks = document.getElementById("navLinks");
+
+  burger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+

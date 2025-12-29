@@ -10,16 +10,27 @@
     <link rel="apple-touch-icon" href="images/favicon.png" />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="logo">Aerys</div>
-      <ul class="nav-links">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="produit.html">Produits</a></li>
-        <li>
-          <a href="panier.html"> Panier <span class="cart-count">0</span> </a>
-        </li>
-      </ul>
-    </nav>
+   <nav class="navbar">
+  <div class="logo">Aerys</div>
+
+  <!-- Burger -->
+  <div class="burger" id="burger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="produit.html">Produits</a></li>
+    <li>
+      <a href="panier.html">
+        Panier <span class="cart-count">0</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
 
     <section class="panier">
       <h1 class="panier-title">Votre Panier</h1>
@@ -80,7 +91,13 @@
           </form>
         </div>
       </section>
-      <p>&copy; 2025 Aerys – Tous droits réservés |</p>
+      <div class="bas">
+        <p>&copy; 2025 Aerys – Tous droits réservés</p>
+        <div class="insta">
+          <img src="images/instagram.png" alt="" height="40" width="40" />
+          <p>aery_sstore</p>
+        </div>
+      </div>
     </footer>
 
     <script src="script.js"></script>
