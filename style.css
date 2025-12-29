@@ -166,6 +166,11 @@ header::after {
 .product-card button:hover {
   background: var(--primary);
 }
+.add-btn.validated {
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+}
 
 /* CONTACT */
 .container {
@@ -240,14 +245,14 @@ button:hover {
 }
 
 .panier-produits {
-  flex: 2 1 400px;
+  flex: 0 1 424px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .panier-sidebar {
-  flex: 1 1 250px;
+  flex: 0 1 305px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -260,12 +265,13 @@ button:hover {
 }
 
 .produit-panier img {
-  width: 50px;
+  width: 15%;
   border-radius: 6px;
 }
 
 .produit-info p {
   font-weight: 600;
+  padding-bottom: 9px;
 }
 
 .produit-quantite {
@@ -288,6 +294,52 @@ button:hover {
   background: none;
   color: var(--accent);
   cursor: pointer;
+}
+.ligne-prix {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.ligne-total {
+  display: flex;
+  justify-content: space-around;
+}
+.total {
+  margin-left: 22px;
+}
+.panier-recap {
+  display: flex;
+  flex-direction: column;
+}
+.panier-reduction form {
+  display: flex;
+  justify-content: space-around;
+}
+.panier-reduction input {
+  background-color: #cfcfe8;
+  margin-top: 18px;
+  border: #cfcfe800 1px solid;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+.panier-contact p {
+  display: flex;
+  justify-content: space-around;
+}
+.org {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.org * {
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: 15px;
+}
+.alg{
+  display: flex;
+
 }
 
 /* FOOTER */

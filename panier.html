@@ -1,76 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panier - Aerys</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panier - Aerys</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/favicon.png" sizes="32x32" />
+    <link rel="icon" href="images/favicon.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="images/favicon.png" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">Aerys</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="produit.html">Produits</a></li>
+        <li>
+          <a href="panier.html"> Panier <span class="cart-count">0</span> </a>
+        </li>
+      </ul>
+    </nav>
 
-  <nav class="navbar">
-    <div class="logo">Aerys</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="produit.html">Produits</a></li>
-      <li><a href="panier.html">Panier</a></li>
-    </ul>
-  </nav>
-
-  <section class="panier">
-    <h1 class="panier-title">Votre Panier</h1>
-    <div class="panier-container">
-      <div class="panier-produits">
-        <!-- Les produits ajoutés via JS apparaîtront ici -->
-      </div>
-
-      <div class="panier-sidebar">
-        <div class="panier-recap">
-          <div class="ligne-prix">
-            <p>Produits :</p>
-            <p class="total-produits">0 DA</p>
-          </div>
-          <div class="ligne-prix">
-            <p>Livraison :</p>
-            <p class="livraison">0 DA</p>
-          </div>
-          <div class="ligne-total">
-            <p>Total :</p>
-            <p class="total">0 DA</p>
-          </div>
-          <button class="button btn-commande">Valider ma commande</button>
+    <section class="panier">
+      <h1 class="panier-title">Votre Panier</h1>
+      <div class="panier-container">
+        <div class="panier-produits">
+          <!-- Les produits ajoutés via JS apparaîtront ici -->
         </div>
 
-        <div class="panier-reduction">
+        <div class="panier-sidebar">
+          <div class="panier-recap">
+            <div class="ligne-prix">
+              <p>Produits :</p>
+              <p class="total-produits">0 DA</p>
+            </div>
+            <div class="ligne-prix">
+              <p>Livraison :</p>
+              <p class="livraison">400 DA</p>
+            </div>
+            <div class="ligne-total">
+              <p>Total :</p>
+              <p class="total">0 DA</p>
+            </div>
+            <button class="button btn-commande">Valider ma commande</button>
+          </div>
+
+          <div class="panier-reduction">
+            <form>
+              <input type="text" placeholder="Code promo" />
+              <button type="submit" class="button">Ajouter</button>
+            </form>
+          </div>
+
+          <div class="panier-contact">
+            <p>Besoin d'aide ? <strong>05.60.19.56.60</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <section class="container">
+        <div class="container_contact">
+          <h2>Contactez-nous</h2>
           <form>
-            <input type="text" placeholder="Code promo">
-            <button type="submit" class="button">Ajouter</button>
+            <input type="text" class="inpt" placeholder="Votre nom" required />
+            <input
+              type="email"
+              class="inpt"
+              placeholder="Votre email"
+              required
+            />
+            <textarea
+              class="inpt"
+              rows="4"
+              placeholder="Votre message"
+            ></textarea>
+            <button type="submit" class="button">Envoyer</button>
           </form>
         </div>
+      </section>
+      <p>&copy; 2025 Aerys – Tous droits réservés |</p>
+    </footer>
 
-        <div class="panier-contact">
-          <p>Besoin d'aide ? <strong>05.60.19.56.60</strong></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <section class="container">
-    <div class="container_contact">
-      <h2>Contactez-nous</h2>
-      <form>
-        <input type="text" class="inpt" placeholder="Votre nom" required>
-        <input type="email" class="inpt" placeholder="Votre email" required>
-        <textarea class="inpt" rows="4" placeholder="Votre message"></textarea>
-        <button type="submit" class="button">Envoyer</button>
-      </form>
-    </div>
-  </section>
-    <p>&copy; 2025 Aerys – Tous droits réservés | 
-    </p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

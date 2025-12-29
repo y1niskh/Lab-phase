@@ -1,59 +1,142 @@
-const buttons = document.querySelectorAll(".add-btn");
-const panier = document.querySelector(".panier-produits");
+// ===============================
+// LOCAL STORAGE
+// ===============================
+function getPanier() {
+  return JSON.parse(localStorage.getItem("panier")) || [];
+}
 
-buttons.forEach(button => {
+function savePanier(panier) {
+  localStorage.setItem("panier", JSON.stringify(panier));
+}
+
+// ===============================
+// VÉRIFIER SI PRODUIT DANS PANIER
+// ===============================
+function isInPanier(id) {
+  const panier = getPanier();
+  return panier.some(p => p.id === id);
+}
+
+// ===============================
+// BADGE PANIER
+// ===============================
+function updateCartCount() {
+  const panier = getPanier();
+  const count = panier.reduce((t, p) => t + p.quantite, 0);
+  const badge = document.querySelector(".cart-count");
+  if (badge) badge.textContent = count;
+}
+
+// ===============================
+// BOUTONS AJOUT PANIER
+// ===============================
+const addButtons = document.querySelectorAll(".add-btn");
+
+addButtons.forEach(button => {
+  const card = button.closest(".product-card");
+  const nom = card.querySelector("h3").textContent;
+  const prix = parseInt(card.querySelector(".prix").textContent);
+  const image = card.querySelector("img").src;
+  const id = nom.replace(/\s+/g, "-").toLowerCase();
+
+  // 🔁 ÉTAT AU CHARGEMENT
+  if (isInPanier(id)) {
+    button.classList.add("validated");
+    button.textContent = "Validé";
+  }
+
   button.addEventListener("click", () => {
-    const card = button.closest(".product-card");
-    const nom = card.querySelector("h3").textContent;
-    const imageSrc = card.querySelector("img").src;
+    let panier = getPanier();
+    const index = panier.findIndex(p => p.id === id);
 
-    const productId = nom.replace(/\s+/g, "-").toLowerCase();
-
-    if (button.classList.contains("validated")) {
+    // ❌ RETIRER
+    if (index !== -1) {
+      panier.splice(index, 1);
+      savePanier(panier);
       button.classList.remove("validated");
       button.textContent = "Ajouter au panier";
-      const produitPanier = panier.querySelector(`[data-id="${productId}"]`);
-      if (produitPanier) produitPanier.remove();
+      updateCartCount();
       return;
     }
 
-    button.classList.add("validated");
-    button.textContent = "Validé";
-
-    const produitPanier = document.createElement("div");
-    produitPanier.classList.add("produit-panier");
-    produitPanier.dataset.id = productId;
-
-    produitPanier.innerHTML = `
-      <img src="${imageSrc}" alt="${nom}">
-      <div class="produit-info">
-        <p class="produit-nom">${nom}</p>
-      </div>
-      <div class="produit-quantite">
-        <button class="moins">-</button>
-        <span>1</span>
-        <button class="plus">+</button>
-      </div>
-      <button class="produit-supprimer">✕</button>
-    `;
-
-    panier.appendChild(produitPanier);
-
-    produitPanier.querySelector(".produit-supprimer").addEventListener("click", () => {
-      produitPanier.remove();
-      button.classList.remove("validated");
-      button.textContent = "Ajouter au panier";
+    // ✅ AJOUTER
+    panier.push({
+      id,
+      nom,
+      prix,
+      image,
+      quantite: 1
     });
 
-    const span = produitPanier.querySelector("span");
-    produitPanier.querySelector(".plus").onclick = () => {
-      span.textContent = Number(span.textContent) + 1;
-    };
-    produitPanier.querySelector(".moins").onclick = () => {
-      if (span.textContent > 1) {
-        span.textContent = Number(span.textContent) - 1;
-      }
-    };
+    savePanier(panier);
+    button.classList.add("validated");
+    button.textContent = "Validé";
+    updateCartCount();
   });
 });
 
+// ===============================
+// AFFICHAGE PANIER
+// ===============================
+const panierContainer = document.querySelector(".panier-produits");
+
+if (panierContainer) afficherPanier();
+
+function afficherPanier() {
+  const panier = getPanier();
+  panierContainer.innerHTML = "";
+
+  let total = 0;
+
+  panier.forEach(produit => {
+    total += produit.prix * produit.quantite;
+
+    const div = document.createElement("div");
+    div.className = "produit-panier";
+
+    div.innerHTML = `
+      <img src="${produit.image}">
+      <div class="org">
+      <div class="produit-info">
+        <p>${produit.prix} DA</p>
+      </div>
+      <div class="alg">
+      <div class="produit-quantite">
+        <button class="moins">-</button>
+        <span>${produit.quantite}</span>
+        <button class="plus">+</button>
+      </div>
+      <button class="produit-supprimer">✕</button>
+      </div>
+      </div>
+    `;
+
+    div.querySelector(".plus").onclick = () => {
+      produit.quantite++;
+      savePanier(panier);
+      afficherPanier();
+      updateCartCount();
+    };
+
+    div.querySelector(".moins").onclick = () => {
+      if (produit.quantite > 1) produit.quantite--;
+      savePanier(panier);
+      afficherPanier();
+      updateCartCount();
+    };
+
+    div.querySelector(".produit-supprimer").onclick = () => {
+      const newPanier = panier.filter(p => p.id !== produit.id);
+      savePanier(newPanier);
+      afficherPanier();
+      updateCartCount();
+    };
+
+    panierContainer.appendChild(div);
+  });
+
+  document.querySelector(".total-produits").textContent = total + " DA";
+  document.querySelector(".total").textContent = total + 400 + " DA";
+}
+
+updateCartCount();
