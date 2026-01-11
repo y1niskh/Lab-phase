@@ -148,4 +148,34 @@ updateCartCount();
   burger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
+ const toggleBtn = document.getElementById("themeToggle");
+const body = document.body;
+
+// Charger le mode sauvegardé
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme) {
+  body.classList.add(savedTheme);
+} else {
+  body.classList.add("light-mode");
+}
+
+// Emoji correct selon le mode ACTUEL
+toggleBtn.textContent =
+  body.classList.contains("dark-mode") ? "🌙" : "☀️";
+
+// Switch mode
+toggleBtn.addEventListener("click", () => {
+  if (body.classList.contains("light-mode")) {
+    body.classList.replace("light-mode", "dark-mode");
+    localStorage.setItem("theme", "dark-mode");
+    toggleBtn.textContent = "🌙"; // revenir au clair
+  } else {
+    body.classList.replace("dark-mode", "light-mode");
+    localStorage.setItem("theme", "light-mode");
+    toggleBtn.textContent = "☀️"; // passer au sombre
+  }
+});
+
+
 
