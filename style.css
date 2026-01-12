@@ -21,7 +21,7 @@ body {
 /* NAVBAR */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 15px 50px;
   background-color: var(--primary);
@@ -66,18 +66,20 @@ header {
   align-items: center;
   color: white;
   text-align: center;
+  position: relative; /* pour bouton dark mode */
 }
+
 header::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 108.5%;
-  background-color: #1e1e2f6a; /* Couleur semi-transparente */
-  /* backdrop-filter: blur(1px); */
-  pointer-events: none; /* Pour ne pas bloquer les interactions */
+  height: 100%;
+  background-color: #1e1e2f6a; /* semi-transparent */
+  pointer-events: none;
 }
+
 .hero h1 {
   font-size: 7rem;
   font-weight: 800;
@@ -89,13 +91,11 @@ header::after {
   font-weight: 700;
   z-index: 1;
 }
-
 .hero p {
   font-size: 1.2rem;
   margin: 10px 0 20px 0;
   z-index: 1;
 }
-
 .hero a {
   padding: 12px 30px;
   border-radius: 50px;
@@ -105,7 +105,6 @@ header::after {
   font-weight: 600;
   z-index: 1;
 }
-
 .hero a:hover {
   background: white;
   color: var(--primary);
@@ -118,6 +117,7 @@ header::after {
 .products-section {
   padding: 60px 20px;
   text-align: center;
+  position: relative; /* pour bouton dark mode */
 }
 
 .section-title {
@@ -164,13 +164,10 @@ header::after {
   cursor: pointer;
 }
 
-.product-card button:hover {
-  background: var(--primary);
-}
+.product-card button:hover,
 .add-btn.validated {
   background: var(--primary);
   color: white;
-  cursor: pointer;
 }
 
 /* CONTACT */
@@ -214,14 +211,16 @@ header::after {
   font-weight: 600;
   cursor: pointer;
 }
+
 button:hover {
   background: var(--primary);
 }
 
 /* PANIER */
 .panier {
-  padding: 50px 20px;
+  padding: 16px 20px;
   min-height: 84vh;
+  position: relative; /* pour bouton dark mode */
 }
 
 .panier-title {
@@ -296,51 +295,52 @@ button:hover {
   color: var(--accent);
   cursor: pointer;
 }
-.ligne-prix {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
+
+.ligne-prix,
 .ligne-total {
   display: flex;
   justify-content: space-around;
 }
+
 .total {
   margin-left: 22px;
 }
+
 .panier-recap {
   display: flex;
   flex-direction: column;
 }
+
 .panier-reduction form {
   display: flex;
   justify-content: space-around;
 }
+
 .panier-reduction input {
   background-color: #cfcfe8;
   margin-top: 18px;
-  border: #cfcfe800 1px solid;
+  border: none;
   border-radius: 10px;
   padding-left: 10px;
 }
+
 .panier-contact p {
   display: flex;
   justify-content: space-around;
 }
+
 .org {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .org * {
-  margin-left: 3px;
-  margin-right: 3px;
+  margin: 0 3px;
   font-size: 15px;
 }
-.alg{
-  display: flex;
 
+.alg {
+  display: flex;
 }
 
 /* FOOTER */
@@ -350,18 +350,22 @@ footer {
   text-align: center;
   padding: 20px;
 }
+
 .bas {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
 .insta {
   display: flex;
   align-items: center;
 }
+
 .insta p {
   margin-left: 7px;
 }
+
 .burger {
   display: none;
   flex-direction: column;
@@ -375,7 +379,6 @@ footer {
   background: #fff;
   border-radius: 2px;
 }
-
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
@@ -408,7 +411,6 @@ footer {
     padding: 16px 0;
     border-top: 1px solid #222;
   }
-
 }
 
 @media (max-width: 600px) {
@@ -441,48 +443,242 @@ footer {
     padding: 16px 0;
     border-top: 1px solid #222;
   }
-
 }
-.theme-btn {
-  background: none;
+
+/* ===== DARK MODE SWITCH ===== */
+.theme-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: var(--primary);
+  padding: 8px;
+  border-radius: 200px;
+  width: 122px;
+  margin-bottom: 43px
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.4;
+}
+
+/* Sun & Moon */
+.sun {
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  position: relative;
+}
+.sun::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed #ffffff;
+}
+.moon {
+  border-radius: 50%;
+  box-shadow: -6px 0 0 2px #ffffff;
+  margin-left: 3px;
+}
+
+body.light-mode .sun { opacity: 0.9; }
+body.dark-mode .moon { opacity: 0.9; }
+
+.theme-toggle {
+  position: relative;
+  width: 45px;
+  height: 20px;
+  border-radius: 999px;
+  background: #e6e8ec;
   border: none;
-  font-size: 22px;
   cursor: pointer;
-  color: white;
 }
-/* ===== MODES ===== */
-body.light-mode {
-  --bg: #f5f5f5;
-  --text: #1e1e2f;
-  --card: #ffffff;
+.knob {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 16px;
+  height: 15.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.35s ease;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.2),
+              -3px -3px 8px rgba(255,255,255,0.9);
+}
+body.dark-mode .knob {
+  transform: translateX(24px);
+  background: #ffffff;
+}
+.theme-toggle:hover {
+  background: #e6e8ec;
 }
 
+/* POSITION DARK MODE BUTTON */
+.hero .hh,
+.products-section .hh,
+.panier .hh {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+/* ===== DARK MODE GLOBAL ===== */
 body.dark-mode {
-  --bg: #12121c;
-  --text: #f5f5f5;
-  --card: #1e1e2f;
-}
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  transition: background-color 0.3s, color 0.3s;
+  background-color: #1e1e2fdf;
+  color: var(--light);
 }
 
-.product-card,
-.panier-produits,
-.panier-sidebar,
-.container_contact {
-  background-color: var(--card);
-  color: var(--text);
+body.dark-mode header {
+  background-color: #1e1e2f;
+}
+body.dark-mode footer {
+  background-color: #111127;
 }
 
-.product-card p {
-  color: var(--text);
+body.dark-mode .product-card,
+body.dark-mode .panier-produits,
+body.dark-mode .panier-sidebar,
+body.dark-mode .container_contact {
+  background-color: #2b2f3a;
+  color: #f5f5f5;
 }
-.logo {
+
+body.dark-mode .product-card p,
+body.dark-mode .container_contact h2,
+body.dark-mode .panier-produits p,
+body.dark-mode .panier-sidebar p {
+  color: #f5f5f5;
+}
+
+body.dark-mode .product-card button,
+body.dark-mode .panier-quantite button,
+body.dark-mode .button,
+body.dark-mode .add-btn.validated {
+  background-color: var(--accent);
   color: white;
-  font-weight: 800;
-  font-size: 26px;
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none; /* affichée via JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 320px;
+}
 
+.modal-content input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.modal-content button {
+  padding: 8px 15px;
+  border-radius: 50px;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+  background-color: var(--accent);
+  color: white;
+  font-weight: 600;
+}
+
+.modal-content button:hover {
+  background-color: var(--primary);
+}
+/* ===== BOUTON DECONNEXION ===== */
+#logoutBtn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--accent); /* même couleur que tes boutons d'ajout */
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 15px; /* espace avec les autres éléments */
+}
+
+#logoutBtn:hover {
+  background-color: var(--primary); /* fonce au survol */
+  transform: scale(1.05);
+}
+
+/* Responsive : réduire légèrement sur petits écrans */
+@media (max-width: 600px) {
+  #logoutBtn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin-left: 0;
+  }
+}
+/* ===== BOUTONS AUTH ===== */
+.auth-buttons button {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.auth-buttons button:hover {
+  background-color: var(--primary);
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .auth-buttons button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin-left: 0;
+  }
+}
+/* ===== BOUTONS LOGIN / LOGOUT ===== */
+#loginBtn,
+#logoutBtn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--accent); /* corail */
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Stack Sans Notch", sans-serif;
+}
+
+#loginBtn:hover,
+#logoutBtn:hover {
+  background-color: var(--primary); /* bleu nuit au hover */
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Optionnel : petite ombre pour donner du relief */
+#loginBtn,
+#logoutBtn {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Positionnement possible */
+#loginBtn {
+  margin-right: 15px; /* si tu veux le mettre à côté du panier */
+}

@@ -11,8 +11,6 @@
   </head>
   <body>
     <nav class="navbar">
-      <div class="logo">Aerys</div>
-
       <!-- Burger -->
       <div class="burger" id="burger">
         <span></span>
@@ -26,11 +24,26 @@
         <li>
           <a href="panier.html"> Panier <span class="cart-count">0</span> </a>
         </li>
-        <li><button id="themeToggle" class="theme-btn">🌙</button></li>
+        <li>
+          <button id="loginBtn">Se connecter</button>
+<button id="logoutBtn" style="display:none;">Se déconnecter</button>
+
+        </li>
       </ul>
     </nav>
 
     <section class="products-section">
+      <div class="hh">
+        <div class="theme-wrapper">
+          <span class="icon sun"></span>
+
+          <button class="theme-toggle">
+            <span class="knob"></span>
+          </button>
+
+          <span class="icon moon"></span>
+        </div>
+      </div>
       <h2 class="section-title">Nos Produits</h2>
       <div class="products-grid">
         <div class="product-card">
@@ -149,6 +162,19 @@
         </div>
       </div>
     </footer>
+    <!-- Modal Connexion / Inscription -->
+<div class="modal" id="modalLogin">
+  <div class="modal-content">
+    <h2>Connexion / Inscription</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="mdp" placeholder="Mot de passe" />
+    <input type="password" id="mdpConfirm" placeholder="Confirmer le mot de passe" style="display: none" />
+    <div style="margin-top: 15px">
+      <button id="btnConnexion">Se connecter</button>
+      <button id="btnInscription">S'inscrire</button>
+    </div>
+  </div>
+</div>
 
     <script src="script.js"></script>
   </body>
