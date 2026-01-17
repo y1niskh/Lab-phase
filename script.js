@@ -1,6 +1,7 @@
 // ===============================
 // LOCAL STORAGE
 // ===============================
+
 function getPanier() {
   return JSON.parse(localStorage.getItem("panier")) || [];
 }
@@ -14,7 +15,7 @@ function savePanier(panier) {
 // ===============================
 function isInPanier(id) {
   const panier = getPanier();
-  return panier.some(p => p.id === id);
+  return panier.some((p) => p.id === id);
 }
 
 // ===============================
@@ -38,7 +39,7 @@ function ouvrirFenetreConnexion() {
   modal.style.display = "flex";
 }
 
-addButtons.forEach(button => {
+addButtons.forEach((button) => {
   const card = button.closest(".product-card");
   const nom = card.querySelector("h3").textContent;
   const prix = parseInt(card.querySelector(".prix").textContent);
@@ -63,7 +64,7 @@ addButtons.forEach(button => {
     // 🛒 Récupérer le panier (tableau simple)
     let panier = JSON.parse(localStorage.getItem("panier")) || [];
 
-    const index = panier.findIndex(p => p.id === id);
+    const index = panier.findIndex((p) => p.id === id);
 
     // ❌ RETIRER
     if (index !== -1) {
@@ -82,7 +83,7 @@ addButtons.forEach(button => {
       prix,
       image,
       quantite: 1,
-      user: currentUser // ⚡ On garde la trace de l'utilisateur
+      user: currentUser, // ⚡ On garde la trace de l'utilisateur
     });
 
     localStorage.setItem("panier", JSON.stringify(panier));
@@ -91,7 +92,6 @@ addButtons.forEach(button => {
     updateCartCount();
   });
 });
-
 
 // ===============================
 // AFFICHAGE PANIER
@@ -106,7 +106,7 @@ function afficherPanier() {
 
   let total = 0;
 
-  panier.forEach(produit => {
+  panier.forEach((produit) => {
     total += produit.prix * produit.quantite;
 
     const div = document.createElement("div");
@@ -144,7 +144,7 @@ function afficherPanier() {
     };
 
     div.querySelector(".produit-supprimer").onclick = () => {
-      const newPanier = panier.filter(p => p.id !== produit.id);
+      const newPanier = panier.filter((p) => p.id !== produit.id);
       savePanier(newPanier);
       afficherPanier();
       updateCartCount();
@@ -157,29 +157,28 @@ function afficherPanier() {
   document.querySelector(".total").textContent = total + 400 + " DA";
 }
 
-
 updateCartCount();
 
-  const burger = document.getElementById("burger");
-  const navLinks = document.getElementById("navLinks");
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("navLinks");
 
-  burger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+burger.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
 const themeToggles = document.querySelectorAll(".theme-toggle");
 const body = document.body;
 
 const savedTheme = localStorage.getItem("theme");
 body.classList.add(savedTheme || "light-mode");
 
-themeToggles.forEach(toggle => {
+themeToggles.forEach((toggle) => {
   toggle.addEventListener("click", () => {
     body.classList.toggle("dark-mode");
     body.classList.toggle("light-mode");
 
     localStorage.setItem(
       "theme",
-      body.classList.contains("dark-mode") ? "dark-mode" : "light-mode"
+      body.classList.contains("dark-mode") ? "dark-mode" : "light-mode",
     );
   });
 });
@@ -197,7 +196,7 @@ loginBtn.addEventListener("click", () => {
 });
 
 // ======= Fermer si clic hors modal =======
-window.addEventListener("click", e => {
+window.addEventListener("click", (e) => {
   if (e.target === modal) modal.style.display = "none";
 });
 
@@ -207,7 +206,7 @@ btnConnexion.addEventListener("click", () => {
   const mdp = document.getElementById("mdp").value;
   const comptes = JSON.parse(localStorage.getItem("comptes")) || [];
 
-  const user = comptes.find(c => c.email === email && c.mdp === mdp);
+  const user = comptes.find((c) => c.email === email && c.mdp === mdp);
   if (user) {
     localStorage.setItem("userConnecte", email);
     modal.style.display = "none";
@@ -235,7 +234,7 @@ btnInscription.addEventListener("click", () => {
   }
 
   let comptes = JSON.parse(localStorage.getItem("comptes")) || [];
-  if (comptes.some(c => c.email === email)) {
+  if (comptes.some((c) => c.email === email)) {
     alert("Email déjà utilisé !");
     return;
   }
@@ -254,7 +253,7 @@ logoutBtn.addEventListener("click", () => {
 
   // Réinitialiser les boutons panier
   const addButtons = document.querySelectorAll(".add-btn");
-  addButtons.forEach(button => {
+  addButtons.forEach((button) => {
     button.classList.remove("validated");
     button.textContent = "Ajouter au panier";
   });
@@ -277,3 +276,86 @@ function updateAuthButtons() {
 
 // Appel initial
 updateAuthButtons();
+const btnCommande = document.querySelector(".btn-commande");
+const modalCommande = document.getElementById("modalCommande");
+const envoyerCommande = document.getElementById("envoyerCommande");
+btnCommande.addEventListener("click", () => {
+  const panier = JSON.parse(localStorage.getItem("panier")) || [];
+
+  if (panier.length === 0) {
+    alert("Votre panier est vide.");
+    return;
+  }
+
+  modalCommande.style.display = "flex";
+});
+function genererCommandeEmail() {
+  const panier = JSON.parse(localStorage.getItem("panier")) || [];
+
+  let message = "";
+  let totalProduits = 0;
+
+  panier.forEach((p) => {
+    message += `• ${p.nom} x${p.quantite} — ${p.prix * p.quantite} DA\n`;
+    totalProduits += p.prix * p.quantite;
+  });
+
+  const livraison = 400;
+  const total = totalProduits + livraison;
+
+  message += `\nProduits : ${totalProduits} DA`;
+  message += `\nLivraison : ${livraison} DA`;
+  message += `\nTOTAL : ${total} DA`;
+
+  return message;
+}
+function genererCommandeEmailProduits() {
+  const panier = JSON.parse(localStorage.getItem("panier")) || [];
+  return panier
+    .map((p) => `• ${p.nom} x${p.quantite} — ${p.prix * p.quantite} DA`)
+    .join("\n");
+}
+emailjs.init("zE1enW3eqgYJxdpml");
+// ======= Envoi commande (EmailJS) =======
+if (envoyerCommande) {
+  envoyerCommande.addEventListener("click", () => {
+    const prenom = document.getElementById("prenomCmd").value.trim();
+    const nom = document.getElementById("nomCmd").value.trim();
+    const tel = document.getElementById("telCmd").value.trim();
+
+    if (!prenom || !nom || !tel) {
+      alert("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    const panier = JSON.parse(localStorage.getItem("panier")) || [];
+    let totalProduits = 0;
+    panier.forEach((p) => {
+      totalProduits += p.prix * p.quantite;
+    });
+    const livraison = 400;
+    const total = totalProduits + livraison;
+
+    emailjs
+      .send("service_h2725g5", "template_mwy578k", {
+        to_email: "contact@aerys.com",
+        prenom: prenom,
+        nom: nom,
+        tel: tel,
+        commande: genererCommandeEmailProduits(),
+        total_produits: totalProduits,
+        livraison: livraison,
+        total: total,
+      })
+      .then(() => {
+        alert("Commande envoyée avec succès !");
+        localStorage.removeItem("panier");
+        if (modalCommande) modalCommande.style.display = "none";
+        location.reload();
+      })
+      .catch((err) => {
+        alert("Erreur lors de l’envoi.");
+        console.error(err);
+      });
+  });
+}

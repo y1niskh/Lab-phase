@@ -121,7 +121,21 @@
     </div>
   </div>
 </div>
+<!-- Modal Commande -->
+<div class="modal" id="modalCommande">
+  <div class="modal-content">
+    <h2>Confirmer la commande</h2>
 
+    <input type="text" id="prenomCmd" placeholder="Prénom" required />
+    <input type="text" id="nomCmd" placeholder="Nom" required />
+    <input type="tel" id="telCmd" placeholder="Numéro de téléphone" required />
+
+    <button id="envoyerCommande">Envoyer la commande</button>
+  </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
