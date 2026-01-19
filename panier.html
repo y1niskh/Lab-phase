@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -25,9 +25,8 @@
           <a href="panier.html"> Panier <span class="cart-count">0</span> </a>
         </li>
         <li>
-         <button id="loginBtn">Se connecter</button>
-<button id="logoutBtn" style="display:none;">Se déconnecter</button>
-
+          <button id="loginBtn">Se connecter</button>
+          <button id="logoutBtn" style="display: none">Se déconnecter</button>
         </li>
       </ul>
     </nav>
@@ -109,31 +108,38 @@
       </div>
     </footer>
     <!-- Modal Connexion / Inscription -->
-<div class="modal" id="modalLogin">
-  <div class="modal-content">
-    <h2>Connexion / Inscription</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="mdp" placeholder="Mot de passe" />
-    <input type="password" id="mdpConfirm" placeholder="Confirmer le mot de passe" style="display: none" />
-    <div style="margin-top: 15px">
-      <button id="btnConnexion">Se connecter</button>
-      <button id="btnInscription">S'inscrire</button>
+    <div class="modal" id="modalLogin">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModalLogin">&times;</button>
+        <h2>Connexion / Inscription</h2>
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="mdp" placeholder="Mot de passe" />
+        <input
+          type="password"
+          id="mdpConfirm"
+          placeholder="Confirmer le mot de passe"
+          style="display: none"
+        />
+        <div style="margin-top: 15px">
+          <button id="btnConnexion">Se connecter</button>
+          <button id="btnInscription">S'inscrire</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<!-- Modal Commande -->
-<div class="modal" id="modalCommande">
-  <div class="modal-content">
-    <h2>Confirmer la commande</h2>
+    <!-- Modal Commande -->
+    <div class="modal" id="modalCommande">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModalCommande">&times;</button>
+        <h2>Confirmer la commande</h2>
 
-    <input type="text" id="prenomCmd" placeholder="Prénom" required />
-    <input type="text" id="nomCmd" placeholder="Nom" required />
-    <input type="tel" id="telCmd" placeholder="Numéro de téléphone" required />
-
-    <button id="envoyerCommande">Envoyer la commande</button>
-  </div>
-</div>
-
+        <input type="text" id="prenomCmd" placeholder="Prénom" />
+        <input type="text" id="nomCmd" placeholder="Nom" />
+        <input type="tel" id="telCmd" placeholder="Téléphone" />
+        <input type="text" id="villeCmd" placeholder="Ville" />
+        <input type="email" id="emailCmd" placeholder="Email" />
+        <button id="envoyerCommande">Terminer ma commande</button>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="script.js"></script>

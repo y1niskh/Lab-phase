@@ -136,7 +136,9 @@ header::after {
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .product-card:hover {
@@ -454,7 +456,7 @@ footer {
   padding: 8px;
   border-radius: 200px;
   width: 122px;
-  margin-bottom: 43px
+  margin-bottom: 43px;
 }
 
 .icon {
@@ -482,8 +484,12 @@ footer {
   margin-left: 3px;
 }
 
-body.light-mode .sun { opacity: 0.9; }
-body.dark-mode .moon { opacity: 0.9; }
+body.light-mode .sun {
+  opacity: 0.9;
+}
+body.dark-mode .moon {
+  opacity: 0.9;
+}
 
 .theme-toggle {
   position: relative;
@@ -503,8 +509,9 @@ body.dark-mode .moon { opacity: 0.9; }
   border-radius: 50%;
   background: #ffffff;
   transition: transform 0.35s ease;
-  box-shadow: 3px 3px 8px rgba(0,0,0,0.2),
-              -3px -3px 8px rgba(255,255,255,0.9);
+  box-shadow:
+    3px 3px 8px rgba(0, 0, 0, 0.2),
+    -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
 body.dark-mode .knob {
   transform: translateX(24px);
@@ -561,9 +568,11 @@ body.dark-mode .add-btn.validated {
 }
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   display: none; /* affichée via JS */
   justify-content: center;
   align-items: center;
@@ -600,6 +609,27 @@ body.dark-mode .add-btn.validated {
 .modal-content button:hover {
   background-color: var(--primary);
 }
+
+.modal-close {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--primary);
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--accent);
+}
+
 /* ===== BOUTON DECONNEXION ===== */
 #logoutBtn {
   padding: 10px 20px;
@@ -685,7 +715,7 @@ body.dark-mode .add-btn.validated {
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
   justify-content: center;
   align-items: center;

@@ -55,12 +55,6 @@ addButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const currentUser = localStorage.getItem("userConnecte");
 
-    // ❌ Vérification utilisateur
-    if (!currentUser) {
-      ouvrirFenetreConnexion();
-      return;
-    }
-
     // 🛒 Récupérer le panier (tableau simple)
     let panier = JSON.parse(localStorage.getItem("panier")) || [];
 
@@ -195,9 +189,34 @@ loginBtn.addEventListener("click", () => {
   modal.style.display = "flex";
 });
 
-// ======= Fermer si clic hors modal =======
+// ======= Fermer si clic hors modal or close button =======
+const closeModalLogin = document.getElementById("closeModalLogin");
+const closeModalCommande = document.getElementById("closeModalCommande");
+
+if (closeModalLogin) {
+  closeModalLogin.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+}
+
+if (closeModalCommande) {
+  closeModalCommande.addEventListener("click", () => {
+    modalCommande.style.display = "none";
+  });
+}
+
 window.addEventListener("click", (e) => {
   if (e.target === modal) modal.style.display = "none";
+  if (e.target === modalCommande) modalCommande.style.display = "none";
+});
+
+// ======= Close modals with ESC key =======
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (modal && modal.style.display === "flex") modal.style.display = "none";
+    if (modalCommande && modalCommande.style.display === "flex")
+      modalCommande.style.display = "none";
+  }
 });
 
 // ======= Connexion =======
@@ -274,6 +293,32 @@ function updateAuthButtons() {
   }
 }
 
+// ======= Global Enter-to-submit for forms (safe, non-intrusive) =======
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter") return;
+
+  const active = document.activeElement;
+  if (!active) return;
+
+  const tag = active.tagName;
+  if (tag === "TEXTAREA" || tag === "BUTTON") return;
+  if (active.isContentEditable) return;
+
+  const form = active.closest && active.closest("form");
+  if (!form) return;
+
+  e.preventDefault();
+  if (typeof form.requestSubmit === "function") {
+    form.requestSubmit();
+  } else {
+    const submitBtn = form.querySelector(
+      'button[type="submit"], input[type="submit"]',
+    );
+    if (submitBtn) submitBtn.click();
+    else form.submit();
+  }
+});
+
 // Appel initial
 updateAuthButtons();
 const btnCommande = document.querySelector(".btn-commande");
@@ -322,9 +367,18 @@ if (envoyerCommande) {
     const prenom = document.getElementById("prenomCmd").value.trim();
     const nom = document.getElementById("nomCmd").value.trim();
     const tel = document.getElementById("telCmd").value.trim();
+    const ville = document.getElementById("villeCmd").value.trim();
+    const emailClient = document.getElementById("emailCmd").value.trim();
 
-    if (!prenom || !nom || !tel) {
+    if (!prenom || !nom || !tel || !ville || !emailClient) {
       alert("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    // simple email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailClient)) {
+      alert("Veuillez entrer une adresse email valide.");
       return;
     }
 
@@ -336,16 +390,30 @@ if (envoyerCommande) {
     const livraison = 400;
     const total = totalProduits + livraison;
 
+    const adminParams = {
+      to_email: "contact@aerys.com",
+      prenom: prenom,
+      nom: nom,
+      tel: tel,
+      email: emailClient,
+      ville: ville,
+      commande: genererCommandeEmailProduits(),
+      total_produits: totalProduits,
+      livraison: livraison,
+      total: total,
+    };
+
+    // first send admin email, then send client confirmation
     emailjs
-      .send("service_h2725g5", "template_mwy578k", {
-        to_email: "contact@aerys.com",
-        prenom: prenom,
-        nom: nom,
-        tel: tel,
-        commande: genererCommandeEmailProduits(),
-        total_produits: totalProduits,
-        livraison: livraison,
-        total: total,
+      .send("service_h2725g5", "template_mwy578k", adminParams)
+      .then(() => {
+        // send client email
+        // send client email
+        return emailjs.send("service_h2725g5", "template_mngegpg", {
+          email: emailClient, // correspond exactement à {{email}}
+          nom: prenom, // correspond à {{nom}} dans le template
+          total: total, // correspond à {{total}} dans le template
+        });
       })
       .then(() => {
         alert("Commande envoyée avec succès !");
@@ -357,5 +425,25 @@ if (envoyerCommande) {
         alert("Erreur lors de l’envoi.");
         console.error(err);
       });
+  });
+}
+
+// ======= Allow Enter to submit the order modal (no form present) =======
+if (modalCommande) {
+  modalCommande.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+
+    const active = document.activeElement;
+    if (!active) return;
+
+    if (
+      modalCommande.contains(active) &&
+      active.tagName === "INPUT" &&
+      active.type !== "button" &&
+      active.type !== "submit"
+    ) {
+      e.preventDefault();
+      if (envoyerCommande) envoyerCommande.click();
+    }
   });
 }
